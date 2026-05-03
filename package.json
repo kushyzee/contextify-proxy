@@ -1,0 +1,9 @@
+{
+  "name": "contextify-proxy",
+  "version": "1.0.0",
+  "description": "Proxy server for Contextify Chrome Extension — securely calls Gemini API",
+  "private": true,
+  "engines": {
+    "node": ">=18"
+  }
+}
