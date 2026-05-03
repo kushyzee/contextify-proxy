@@ -147,13 +147,15 @@ Rules:
 
   let summary;
   try {
-    const cleaned = rawText
-      .replace(/^```json\s*/i, "")
-      .replace(/^```\s*/i, "")
-      .replace(/```\s*$/i, "")
-      .trim();
+    const firstBrace = rawText.indexOf("{");
+    const lastBrace = rawText.lastIndexOf("}");
 
-    summary = JSON.parse(cleaned);
+    if (firstBrace === -1 || lastBrace === -1) {
+      throw new Error("No JSON object found in response.");
+    }
+
+    const extracted = rawText.slice(firstBrace, lastBrace + 1);
+    summary = JSON.parse(extracted);
   } catch (err) {
     console.error("[Contextify Proxy] Failed to parse Gemini JSON:", rawText);
     return res.status(502).json({
